@@ -5,8 +5,8 @@
 class ShaderProgram {
 public:
 	ShaderProgram(const std::string& vertexPath, const std::string& fragmentPath);
-	void start();
-	void stop();
+	void StartShader();
+	void StopShader();
 	void cleanUp();
 private:
 	unsigned int programID;
