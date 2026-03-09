@@ -1,10 +1,13 @@
 #include "Loader.h"
 
-RawModel Loader::loadToVAO(float* position, int count) {
+
+
+RawModel Loader::loadToVAO(float* position, int posCount, unsigned int* indices, int indexCount) {
 	unsigned int vaoID = createVAO();
-	storeDataAttributeList(0, position, count);
+	bindIndicesBuffer(indices, indexCount);
+	storeDataAttributeList(0, position, posCount);
 	unbindVAO();
-	return RawModel(vaoID, count / 3);
+	return RawModel(vaoID, indexCount);
 }
 
 void Loader::cleanUp() {
@@ -13,6 +16,9 @@ void Loader::cleanUp() {
 	}
 	for (unsigned int vbo : vbos) {
 		glDeleteBuffers(1, &vbo);
+	}
+	for (unsigned int ebo : ebos) {
+		glDeleteBuffers(1, &ebo);
 	}
 }
 
@@ -36,6 +42,15 @@ void Loader::storeDataAttributeList(int attribNumber, float* data, int count) {
 	glEnableVertexAttribArray(attribNumber);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void Loader::bindIndicesBuffer(unsigned int* indices, int count) {
+	unsigned int eboID;
+	glGenBuffers(1, &eboID);
+	ebos.push_back(eboID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_STATIC_DRAW); //INDEX
+
 }
 
 void Loader::unbindVAO() {
