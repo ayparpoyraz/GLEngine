@@ -131,5 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GameEngine.slnx" />
+    <None Include="Engine\shaders\fragment.glsl" />
+    <None Include="Engine\shaders\vertex.glsl" />
   </ItemGroup>
 </Project>
