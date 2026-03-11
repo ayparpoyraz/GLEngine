@@ -8,8 +8,10 @@ public:
 	void StartShader();
 	void StopShader();
 	void cleanUp();
-private:
+protected:
 	unsigned int programID;
+
+private:
 	unsigned int vertexShaderID;
 	unsigned int fragmentShaderID;
 

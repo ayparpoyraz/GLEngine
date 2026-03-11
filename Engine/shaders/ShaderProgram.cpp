@@ -7,14 +7,12 @@ ShaderProgram::ShaderProgram(const std::string& vertexPath, const std::string& f
 	vertexShaderID = loadShader(vertexPath, GL_VERTEX_SHADER);
 	fragmentShaderID = loadShader(fragmentPath, GL_FRAGMENT_SHADER);
 
-	//ikisini birbirine baðlýyoruz
 	programID = glCreateProgram();
 	glAttachShader(programID, vertexShaderID);
 	glAttachShader(programID, fragmentShaderID);
 	glLinkProgram(programID);
 }
 void ShaderProgram::StartShader() {
-	//programID'sini kullan
 	glUseProgram(programID);
 }
 void ShaderProgram::StopShader() {

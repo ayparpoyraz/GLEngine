@@ -7,8 +7,11 @@ void GameLoop::run(GLFWwindow* window, RawModel& model) {
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
 
+
         renderer.prepare();
+        shader.StartShader();
         renderer.render(model);
+        shader.StopShader();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

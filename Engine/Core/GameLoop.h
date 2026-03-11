@@ -3,6 +3,7 @@
 #include "../models/RawModel.h"
 #include "../renderEngine/Loader.h"
 #include "../renderEngine/Renderer.h"
+#include "../shaders/StaticShader.h"
 
 
 
@@ -12,5 +13,6 @@ public:
 
 private:
     Renderer renderer;
+    StaticShader shader;
     void processInput(GLFWwindow* window);
 };
