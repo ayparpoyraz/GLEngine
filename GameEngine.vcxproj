@@ -157,6 +157,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Engine\shaders\StaticShader.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="stb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\include\glad\glad.h" />
@@ -172,6 +173,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="dependencies\include\imgui\imstb_textedit.h" />
     <ClInclude Include="dependencies\include\imgui\imstb_truetype.h" />
     <ClInclude Include="dependencies\include\KHR\khrplatform.h" />
+    <ClInclude Include="dependencies\include\stb\stb_image.h" />
     <ClInclude Include="Engine\Core\GameLoop.h" />
     <ClInclude Include="Engine\models\RawModel.h" />
     <ClInclude Include="Engine\renderEngine\Display.h" />

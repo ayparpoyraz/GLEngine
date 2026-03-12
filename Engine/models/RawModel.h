@@ -1,9 +1,9 @@
 #pragma once
-
+#include "../TextureLoader/Texture.h"
 
 class RawModel {
 public:
-    RawModel(unsigned int vaoID, int vertexCount);
+    RawModel(unsigned int vaoID, int vertexCount, Texture texture);
 
     unsigned int getVaoID();
     int getVertexCount();
@@ -11,4 +11,5 @@ public:
 private:
     unsigned int vaoID;
     int vertexCount;
+    Texture texture;
 };

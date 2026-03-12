@@ -2,10 +2,13 @@
 
 
 
-RawModel Loader::loadToVAO(float* position, int posCount, unsigned int* indices, int indexCount) {
+RawModel Loader::loadToVAO(float* position, int posCount, unsigned int* indices, 
+	int indexCount, float* textureCoords, int texCount) {
+
 	unsigned int vaoID = createVAO();
 	bindIndicesBuffer(indices, indexCount);
 	storeDataAttributeList(0, position, posCount);
+	storeDataAttributeList(1, textureCoords, texCount);
 	unbindVAO();
 	return RawModel(vaoID, indexCount);
 }
@@ -30,7 +33,7 @@ unsigned int Loader::createVAO() {
 	return vaoID;
 }
 
-void Loader::storeDataAttributeList(int attribNumber, float* data, int count) {
+void Loader::storeDataAttributeList(int attribNumber, float* data, int count, int size) {
 	unsigned int vboID;
 	glGenBuffers(1, &vboID);
 	vbos.push_back(vboID);
@@ -38,7 +41,7 @@ void Loader::storeDataAttributeList(int attribNumber, float* data, int count) {
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 	glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), data, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(attribNumber, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(attribNumber, size, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(attribNumber);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
