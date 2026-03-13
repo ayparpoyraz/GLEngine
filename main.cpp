@@ -6,6 +6,8 @@
 #include "Engine/Core/GameLoop.h"
 #include "Engine/TextureLoader/Texture.h"
 #include "Engine/math/Math.h"
+#include "Engine/entities/Entity.h"
+#include <vector>
 
 int main() {
     GLFWwindow* window = createWindow(1200, 800, "Game");
@@ -35,13 +37,15 @@ int main() {
     Loader loader;
     RawModel model = loader.loadToVAO(positions, 12, indices, 6, texCoords, 8, texture);
 
-    // transform
-    glm::vec3 position(0.0f, 0.0f, 0.0f);
-    glm::vec3 rotation(0.0f, 0.0f, 0.0f);
-    float scale = 1.0f;
+    // farklı pozisyonlarda 3 entity
+    std::vector<Entity> entities = {
+        Entity(model, glm::vec3(0.0f,  0.0f, 0.0f), glm::vec3(0), 1.0f),
+        Entity(model, glm::vec3(0.6f,  0.0f, 0.0f), glm::vec3(0), 0.5f),
+        Entity(model, glm::vec3(-0.6f,  0.0f, 0.0f), glm::vec3(0), 0.5f)
+    };
 
     GameLoop loop;
-    loop.run(window, model, position, rotation, scale);
+    loop.run(window, entities);
 
     loader.cleanUp();
     glfwTerminate();

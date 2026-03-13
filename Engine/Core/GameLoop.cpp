@@ -3,10 +3,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-void GameLoop::run(GLFWwindow* window, RawModel& model,
-    glm::vec3 position, glm::vec3 rotation, float scale) {
+void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
-    // ImGui initialize
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -23,10 +21,16 @@ void GameLoop::run(GLFWwindow* window, RawModel& model,
         renderer.prepare();
         shader.StartShader();
 
-        glm::mat4 matrix = Math::createTransformationMatrix(position, rotation, scale);
-        shader.loadTransformationMatrix(matrix);
+        for (Entity& entity : entities) {
+            glm::mat4 matrix = Math::createTransformationMatrix(
+                entity.getPosition(),
+                entity.getRotation(),
+                entity.getScale()
+            );
+            shader.loadTransformationMatrix(matrix);
+            renderer.render(entity.getModel());
+        }
 
-        renderer.render(model);
         shader.StopShader();
 
         // ImGui
@@ -36,9 +40,6 @@ void GameLoop::run(GLFWwindow* window, RawModel& model,
 
         ImGui::Begin("Debug");
         ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
-        ImGui::SliderFloat3("Position", &position.x, -1.0f, 1.0f);
-        ImGui::SliderFloat3("Rotation", &rotation.x, -180.0f, 180.0f);
-        ImGui::SliderFloat("Scale", &scale, 0.1f, 3.0f);
         ImGui::End();
 
         ImGui::Render();
@@ -48,7 +49,6 @@ void GameLoop::run(GLFWwindow* window, RawModel& model,
         glfwPollEvents();
     }
 
-    // temizlik
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
