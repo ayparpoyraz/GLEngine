@@ -37,10 +37,9 @@ int main() {
     Loader loader;
     RawModel model = loader.loadToVAO(positions, 12, indices, 6, texCoords, 8, texture);
 
-    // farklı pozisyonlarda 3 entity
     std::vector<Entity> entities = {
-        Entity(model, glm::vec3(0.0f,  0.0f, 0.0f), glm::vec3(0), 1.0f),
-        Entity(model, glm::vec3(0.6f,  0.0f, 0.0f), glm::vec3(0), 0.5f),
+        Entity(model, glm::vec3(0.0f,  0.0f, 0.0f), glm::vec3(0), 0.2f),
+        Entity(model, glm::vec3(0.6f,  0.0f, 0.0f), glm::vec3(0), 0.2f),
         Entity(model, glm::vec3(-0.6f,  0.0f, 0.0f), glm::vec3(0), 0.5f)
     };
 
