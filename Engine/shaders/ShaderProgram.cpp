@@ -1,4 +1,5 @@
 #include "ShaderProgram.h"
+#include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -34,6 +35,11 @@ void ShaderProgram::loadInt(unsigned int location, int value) {
 unsigned int ShaderProgram::getUniformLocation(const std::string& name) {
 	return glGetUniformLocation(programID, name.c_str());
 }
+
+void ShaderProgram::loadMatrix(unsigned int location, glm::mat4 matrix) {
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
 
 unsigned int ShaderProgram::loadShader(const std::string& path, unsigned int type) {
 

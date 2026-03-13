@@ -11,3 +11,6 @@ void StaticShader::cleanUp() {
 void StaticShader::connectTextureUnits() {
 	loadInt(getUniformLocation("textureSampler"), 0); // texture unit 0
 }
+void StaticShader::loadTransformationMatrix(glm::mat4 matrix) {
+	loadMatrix(getUniformLocation("transformMatrix"), matrix);
+}

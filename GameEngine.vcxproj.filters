@@ -21,7 +21,7 @@
     <ClCompile Include="glad.c">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\renderEngine\Display.cpp">
+    <ClCompile Include="Engine\Display\Display.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Core\GameLoop.cpp">
@@ -83,7 +83,7 @@
     <ClInclude Include="dependencies\include\KHR\khrplatform.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\renderEngine\Display.h">
+    <ClInclude Include="Engine\Display\Display.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\GameLoop.h">
