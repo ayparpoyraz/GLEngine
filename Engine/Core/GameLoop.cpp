@@ -5,23 +5,30 @@
 
 void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
-    ImGui::StyleColorsDark();
+    // projection loop dışında
+    glm::mat4 projection = glm::perspective(
+        glm::radians(70.0f),
+        1200.0f / 800.0f,
+        0.1f,
+        1000.0f
+    );
 
     shader.StartShader();
+    shader.loadProjectionMatrix(projection);  // ← shader'a gönder
     shader.connectTextureUnits();
     shader.StopShader();
 
+    float rotation = 0.0f;
+
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
+        rotation += 0.5f;
 
         renderer.prepare();
         shader.StartShader();
 
         for (Entity& entity : entities) {
+            entity.setRotation(glm::vec3(rotation, rotation, 0.0f));
             glm::mat4 matrix = Math::createTransformationMatrix(
                 entity.getPosition(),
                 entity.getRotation(),
@@ -32,26 +39,9 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
         }
 
         shader.StopShader();
-
-        // ImGui
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        ImGui::Begin("Debug");
-        ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
-        ImGui::End();
-
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
     shader.cleanUp();
 }
 

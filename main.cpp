@@ -14,13 +14,23 @@ int main() {
     if (!window) return -1;
 
     float positions[] = {
-        -0.5f,  0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.5f,  0.5f, 0.0f
+        // ön yüz
+        -0.5f,  0.5f,  0.5f,
+        -0.5f, -0.5f,  0.5f,
+         0.5f, -0.5f,  0.5f,
+         0.5f,  0.5f,  0.5f,
+         // arka yüz
+         -0.5f,  0.5f, -0.5f,
+         -0.5f, -0.5f, -0.5f,
+          0.5f, -0.5f, -0.5f,
+          0.5f,  0.5f, -0.5f
     };
 
     float texCoords[] = {
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
         0.0f, 1.0f,
         0.0f, 0.0f,
         1.0f, 0.0f,
@@ -28,25 +38,34 @@ int main() {
     };
 
     unsigned int indices[] = {
-        0, 1, 2,
-        2, 3, 0
+        // ön
+        0, 1, 2,  2, 3, 0,
+        // arka
+        4, 5, 6,  6, 7, 4,
+        // sol
+        4, 5, 1,  1, 0, 4,
+        // sağ
+        3, 2, 6,  6, 7, 3,
+        // üst
+        4, 0, 3,  3, 7, 4,
+        // alt
+        1, 5, 6,  6, 2, 1
     };
 
     Texture texture("Resource/pop_cat.png");
 
     Loader loader;
-    RawModel model = loader.loadToVAO(positions, 12, indices, 6, texCoords, 8, texture);
+    RawModel model = loader.loadToVAO(positions, 24, indices, 36, texCoords, 16, texture);
 
     std::vector<Entity> entities = {
-        Entity(model, glm::vec3(0.0f,  0.0f, 0.0f), glm::vec3(0), 0.2f),
-        Entity(model, glm::vec3(0.6f,  0.0f, 0.0f), glm::vec3(0), 0.2f),
-        Entity(model, glm::vec3(-0.6f,  0.0f, 0.0f), glm::vec3(0), 0.5f)
+        Entity(model, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f),
+        Entity(model, glm::vec3(2.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f),
+        Entity(model, glm::vec3(-2.0f, 0.0f, -3.0f), glm::vec3(0.0f), 0.5f)
     };
 
     GameLoop loop;
     loop.run(window, entities);
 
-    loader.cleanUp();
     glfwTerminate();
 
     return 0;

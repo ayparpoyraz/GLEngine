@@ -12,5 +12,4 @@ public:
         unsigned int* indices, int indexCount,
         float* texCoords, int texCount,
         Texture texture);
-    void cleanUp();
 };

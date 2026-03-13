@@ -14,3 +14,6 @@ void StaticShader::connectTextureUnits() {
 void StaticShader::loadTransformationMatrix(glm::mat4 matrix) {
 	loadMatrix(getUniformLocation("transformMatrix"), matrix);
 }
+void StaticShader::loadProjectionMatrix(glm::mat4 matrix) {
+	loadMatrix(getUniformLocation("projectionMatrix"), matrix);
+}

@@ -22,7 +22,3 @@ RawModel Loader::loadToVAO(float* positions, int posCount,
     vao.unbind();
     return RawModel(vao.getID(), indexCount, texture);
 }
-
-void Loader::cleanUp() {
-    //pass
-}
