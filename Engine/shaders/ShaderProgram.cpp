@@ -27,6 +27,14 @@ void ShaderProgram::cleanUp() {
 	glDeleteProgram(programID);
 }
 
+void ShaderProgram::loadInt(unsigned int location, int value) {
+	glUniform1i(location, value);
+}
+
+unsigned int ShaderProgram::getUniformLocation(const std::string& name) {
+	return glGetUniformLocation(programID, name.c_str());
+}
+
 unsigned int ShaderProgram::loadShader(const std::string& path, unsigned int type) {
 
 	//Dosya Oku

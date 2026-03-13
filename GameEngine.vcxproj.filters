@@ -66,6 +66,9 @@
     <ClCompile Include="stb.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\TextureLoader\Texture.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\include\GLFW\glfw3.h">
@@ -131,6 +134,9 @@
     <ClInclude Include="dependencies\include\stb\stb_image.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\TextureLoader\Texture.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
@@ -139,5 +145,10 @@
     <None Include="GameEngine.slnx" />
     <None Include="Engine\shaders\fragment.glsl" />
     <None Include="Engine\shaders\vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\pop_cat.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
   </ItemGroup>
 </Project>

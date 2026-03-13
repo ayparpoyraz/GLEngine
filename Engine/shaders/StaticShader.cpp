@@ -8,3 +8,6 @@ void StaticShader::cleanUp() {
 	ShaderProgram::cleanUp();
 }
 
+void StaticShader::connectTextureUnits() {
+	loadInt(getUniformLocation("textureSampler"), 0); // texture unit 0
+}

@@ -7,6 +7,7 @@ public:
 
     unsigned int getVaoID();
     int getVertexCount();
+    Texture& getTexture();
 
 private:
     unsigned int vaoID;

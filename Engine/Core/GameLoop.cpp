@@ -4,9 +4,12 @@
 #include "imgui/imgui_impl_opengl3.h"
 
 void GameLoop::run(GLFWwindow* window, RawModel& model) {
+    shader.StartShader();
+    shader.connectTextureUnits();  // ← bir kez yeterli
+    shader.StopShader();
+
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
-
 
         renderer.prepare();
         shader.StartShader();
@@ -16,6 +19,7 @@ void GameLoop::run(GLFWwindow* window, RawModel& model) {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+    shader.cleanUp();
 }
 
 void GameLoop::processInput(GLFWwindow* window) {

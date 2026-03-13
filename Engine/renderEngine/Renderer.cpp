@@ -9,6 +9,8 @@ void Renderer::prepare() {
 
 void Renderer::render(RawModel& model) {
 	glBindVertexArray(model.getVaoID());
+	model.getTexture().bind();
 	glDrawElements(GL_TRIANGLES, model.getVertexCount(), GL_UNSIGNED_INT, 0);
+	model.getTexture().unbind();
 	glBindVertexArray(0);
 }

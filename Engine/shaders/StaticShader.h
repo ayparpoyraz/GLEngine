@@ -5,4 +5,5 @@ class StaticShader : public ShaderProgram {
 public:
 	StaticShader();
 	void cleanUp();
+	void connectTextureUnits();
 };

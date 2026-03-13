@@ -155,6 +155,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Engine\renderEngine\Renderer.cpp" />
     <ClCompile Include="Engine\shaders\ShaderProgram.cpp" />
     <ClCompile Include="Engine\shaders\StaticShader.cpp" />
+    <ClCompile Include="Engine\TextureLoader\Texture.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stb.cpp" />
@@ -181,6 +182,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Engine\renderEngine\Renderer.h" />
     <ClInclude Include="Engine\shaders\ShaderProgram.h" />
     <ClInclude Include="Engine\shaders\StaticShader.h" />
+    <ClInclude Include="Engine\TextureLoader\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
@@ -189,6 +191,9 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="Engine\shaders\fragment.glsl" />
     <None Include="Engine\shaders\vertex.glsl" />
     <None Include="GameEngine.slnx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\pop_cat.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

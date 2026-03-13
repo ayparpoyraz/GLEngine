@@ -3,14 +3,14 @@
 
 
 RawModel Loader::loadToVAO(float* position, int posCount, unsigned int* indices, 
-	int indexCount, float* textureCoords, int texCount) {
+	int indexCount, float* textureCoords, int texCount, Texture texture) {
 
 	unsigned int vaoID = createVAO();
 	bindIndicesBuffer(indices, indexCount);
-	storeDataAttributeList(0, position, posCount);
-	storeDataAttributeList(1, textureCoords, texCount);
+	storeDataAttributeList(0, position, posCount, 3); //attrib = 0 3 float
+	storeDataAttributeList(1, textureCoords, texCount, 2); //attrib = 1 (U,V)
 	unbindVAO();
-	return RawModel(vaoID, indexCount);
+	return RawModel(vaoID, indexCount, texture);
 }
 
 void Loader::cleanUp() {
