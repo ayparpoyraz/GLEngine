@@ -5,7 +5,6 @@
 
 void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
-    // projection loop dışında
     glm::mat4 projection = glm::perspective(
         glm::radians(70.0f),
         1200.0f / 800.0f,
@@ -14,21 +13,26 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
     );
 
     shader.StartShader();
-    shader.loadProjectionMatrix(projection);  // ← shader'a gönder
+    shader.loadProjectionMatrix(projection);
     shader.connectTextureUnits();
     shader.StopShader();
 
-    float rotation = 0.0f;
+    float lastFrame = 0.0f;
 
     while (!glfwWindowShouldClose(window)) {
+        float currentFrame = glfwGetTime();
+        float deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         processInput(window);
-        rotation += 0.5f;
+        camera.processKeyboard(window, deltaTime);  
 
         renderer.prepare();
         shader.StartShader();
 
+        shader.loadViewMatrix(camera.getViewMatrix());
+
         for (Entity& entity : entities) {
-            entity.setRotation(glm::vec3(rotation, rotation, 0.0f));
             glm::mat4 matrix = Math::createTransformationMatrix(
                 entity.getPosition(),
                 entity.getRotation(),

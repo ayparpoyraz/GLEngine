@@ -27,10 +27,10 @@
     <ClCompile Include="Engine\Core\GameLoop.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\renderEngine\Renderer.cpp">
+    <ClCompile Include="Engine\Renderer\Renderer.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\renderEngine\Loader\Loader.cpp">
+    <ClCompile Include="Engine\Renderer\Loader\Loader.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
     <ClCompile Include="Engine\models\RawModel.cpp">
@@ -87,13 +87,28 @@
     <ClCompile Include="Engine\Input\Input.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\renderEngine\Loader\VAO.cpp">
+    <ClCompile Include="Engine\Renderer\Loader\VAO.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\renderEngine\Loader\VBO.cpp">
+    <ClCompile Include="Engine\Renderer\Loader\VBO.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\renderEngine\Loader\EBO.cpp">
+    <ClCompile Include="Engine\Renderer\Loader\EBO.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\OBJLoader\OBJLoader.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\OBJLoader\MTLLoader.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera\Camera.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera\FreeCamera.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Editor.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,7 +131,7 @@
     <ClInclude Include="Engine\Core\GameLoop.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\renderEngine\Renderer.h">
+    <ClInclude Include="Engine\Renderer\Renderer.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
     <ClInclude Include="Engine\models\RawModel.h">
@@ -1034,16 +1049,31 @@
     <ClInclude Include="Engine\Input\Input.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\renderEngine\Loader\VAO.h">
+    <ClInclude Include="Engine\Renderer\Loader\VAO.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\renderEngine\Loader\VBO.h">
+    <ClInclude Include="Engine\Renderer\Loader\VBO.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\renderEngine\Loader\EBO.h">
+    <ClInclude Include="Engine\Renderer\Loader\EBO.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\renderEngine\Loader\Loader.h">
+    <ClInclude Include="Engine\Renderer\Loader\Loader.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\OBJLoader\OBJLoader.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\OBJLoader\MTLLoader.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera\Camera.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera\FreeCamera.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Editor.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
   </ItemGroup>

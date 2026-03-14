@@ -9,4 +9,5 @@ public:
     void connectTextureUnits();
     void loadTransformationMatrix(glm::mat4 matrix);
     void loadProjectionMatrix(glm::mat4 matrix);
+    void loadViewMatrix(glm::mat4 matrix);
 };
