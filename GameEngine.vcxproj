@@ -152,7 +152,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="dependencies\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Camera\FreeCamera.cpp" />
-    <ClCompile Include="Engine\Core\Editor.cpp" />
+    <ClCompile Include="Engine\Core\Editor\Editor.cpp" />
     <ClCompile Include="Engine\Core\GameLoop.cpp" />
     <ClCompile Include="Engine\Entities\Entity.cpp" />
     <ClCompile Include="Engine\Entities\Entity.h" />
@@ -480,7 +480,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="dependencies\include\stb\stb_image.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
     <ClInclude Include="Engine\Camera\FreeCamera.h" />
-    <ClInclude Include="Engine\Core\Editor.h" />
+    <ClInclude Include="Engine\Core\Editor\Editor.h" />
     <ClInclude Include="Engine\Core\GameLoop.h" />
     <ClInclude Include="Engine\Input\Input.h" />
     <ClInclude Include="Engine\Math\Math.h" />

@@ -11,13 +11,15 @@
 #define EDITOR_MODE
 
 #ifdef EDITOR_MODE
-#include "Engine/Core/Editor.h"
+#include "Engine/Core/Editor/Editor.h"
+GLFWwindow* window = createWindow(1920, 1080, "GameEngine");
 #else
 #include "Engine/Core/GameLoop.h"
+GLFWwindow* window = createFullScreen(1920, 1080, "GameEngine");
 #endif
 
 int main() {
-    GLFWwindow* window = createWindow(1200, 800, "GameEngine");
+   
     if (!window) return -1;
 
     float positions[] = {

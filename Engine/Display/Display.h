@@ -4,4 +4,5 @@
 #include <iostream>
 
 GLFWwindow* createWindow(int WIDTH, int HEIGHT, const char* TITLE);
+GLFWwindow* createFullScreen(int WIDTH, int HEIGHT, const char* TITLE);
 void framebuffer_size_callback(GLFWwindow* window, int WIDTH, int HEIGHT);

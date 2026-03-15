@@ -108,7 +108,7 @@
     <ClCompile Include="Engine\Camera\FreeCamera.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Core\Editor.cpp">
+    <ClCompile Include="Engine\Core\Editor\Editor.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1073,7 +1073,7 @@
     <ClInclude Include="Engine\Camera\FreeCamera.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Core\Editor.h">
+    <ClInclude Include="Engine\Core\Editor\Editor.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
   </ItemGroup>
