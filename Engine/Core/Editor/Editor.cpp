@@ -4,6 +4,9 @@
 #include "imgui/imgui_impl_opengl3.h"
 
 void Editor::applyEditorTheme() {
+    
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF("Resource/fonts/Roboto-Regular.ttf", 15.0f);
     ImGuiStyle& style = ImGui::GetStyle();
     style.WindowRounding = 4.0f;
     style.FrameRounding = 3.0f;
@@ -69,11 +72,12 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
 
     while (!glfwWindowShouldClose(window)) {
         int screenWidth, screenHeight;
+        glfwGetWindowSize(window, &screenWidth, &screenHeight);
+
         float currentFrame = glfwGetTime();
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        glfwGetWindowSize(window, &screenWidth, &screenHeight);
-            
+
         static bool insertPressed = false;
         if (glfwGetKey(window, GLFW_KEY_INSERT) == GLFW_PRESS) {
             if (!insertPressed) {
@@ -88,6 +92,23 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
         processInput(window);
         camera.processKeyboard(window, deltaTime);
 
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            camera.processMouse(getMouseXOffset(), getMouseYOffset());
+        }
+        else {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+        
+
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
+            glm::vec3 rot = entities[selectedEntity].getRotation();
+            rot.y += getMouseXOffset() * 0.5f;
+            rot.x += getMouseYOffset() * 0.5f;
+            entities[selectedEntity].setRotation(rot);
+        }
+        resetScrollOffset();
+        resetMouseOffset();
         if (autoRotate) rotation += 0.5f;
 
         renderer.prepare();
@@ -112,7 +133,6 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
 
         if (isMenuVisible) {
 
-            
             if (ImGui::BeginMainMenuBar()) {
                 if (ImGui::BeginMenu("File")) {
                     ImGui::MenuItem("New Scene");
@@ -124,7 +144,8 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                 }
                 if (ImGui::BeginMenu("Add")) {
                     if (ImGui::MenuItem("Entity"))
-                        entities.push_back(Entity(defaultModel, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f));
+                        entities.push_back(Entity(defaultModel, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f,
+                            "Entity_" + std::to_string(entities.size())));
                     ImGui::EndMenu();
                 }
                 if (ImGui::BeginMenu("View")) {
@@ -141,7 +162,6 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                     ImGui::EndMenu();
                 }
 
-      
                 float buttonWidth = 70.0f;
                 float windowWidth = ImGui::GetWindowWidth();
                 ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f);
@@ -155,7 +175,7 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.4f, 0.1f, 1.0f));
                     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.6f, 0.2f, 1.0f));
                 }
-                if (ImGui::Button(isStarted ? " Stop " : " Derle "))
+                if (ImGui::Button(isStarted ? " Stop " : " Start "))
                     isStarted = !isStarted;
                 ImGui::PopStyleColor(3);
 
@@ -164,21 +184,19 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                 ImGui::EndMainMenuBar();
             }
 
-            // Sol panel
             ImGui::SetNextWindowPos(ImVec2(0, 20));
             ImGui::SetNextWindowSize(ImVec2(200, screenHeight - 20));
             ImGui::Begin("Scene Entities", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
             ImGui::Checkbox("Auto Rotate", &autoRotate);
             ImGui::Separator();
             for (int i = 0; i < (int)entities.size(); i++) {
-                char label[32];
-                sprintf_s(label, "Entity %d", i);
-                if (ImGui::Selectable(label, selectedEntity == i))
+                if (ImGui::Selectable(entities[i].getEntityName().c_str(), selectedEntity == i))
                     selectedEntity = i;
             }
             ImGui::Separator();
             if (ImGui::Button("+ Add Entity", ImVec2(-1, 0)))
-                entities.push_back(Entity(defaultModel, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f));
+                entities.push_back(Entity(defaultModel, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f,
+                    "Entity_" + std::to_string(entities.size())));
             if (!entities.empty()) {
                 if (ImGui::Button("- Remove Entity", ImVec2(-1, 0))) {
                     entities.erase(entities.begin() + selectedEntity);
@@ -188,34 +206,39 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
             }
             ImGui::End();
 
-            //Entity Transform
-            ImGui::SetNextWindowPos(ImVec2(screenWidth - 200, 20));
-            ImGui::SetNextWindowSize(ImVec2(200, screenHeight - 20));
+            ImGui::SetNextWindowPos(ImVec2(screenWidth - 210, 20));
+            ImGui::SetNextWindowSize(ImVec2(210, screenHeight - 25));
             ImGui::Begin("Properties", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
-            if (!entities.empty()) {
-                ImGui::Text("Entity %d", selectedEntity);
+
+            if (!entities.empty() && selectedEntity < (int)entities.size()) {
+                char nameBuf[64];
+                strncpy_s(nameBuf, entities[selectedEntity].getEntityName().c_str(), sizeof(nameBuf));
+                if (ImGui::InputText("##name", nameBuf, sizeof(nameBuf)))
+                    entities[selectedEntity].setName(nameBuf);
+
                 ImGui::Separator();
-                ImGui::Text("Transform");
-                ImGui::Spacing();
-                glm::vec3 pos = entities[selectedEntity].getPosition();
-                glm::vec3 rot = entities[selectedEntity].getRotation();
-                float scale = entities[selectedEntity].getScale();
-                if (ImGui::DragFloat3("Position", &pos.x, 0.01f))
-                    entities[selectedEntity].setPosition(pos);
-                if (ImGui::DragFloat3("Rotation", &rot.x, 0.5f))
-                    entities[selectedEntity].setRotation(rot);
-                if (ImGui::DragFloat("Scale", &scale, 0.01f, 0.1f, 10.0f))
-                    entities[selectedEntity].setScale(scale);
-                ImGui::Spacing();
-                ImGui::Separator();
-                ImGui::Text("Camera");
-                ImGui::Spacing();
-                glm::vec3 camPos = camera.getPosition();
-                ImGui::Text("Pos: %.1f %.1f %.1f", camPos.x, camPos.y, camPos.z);
+
+                if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
+                    glm::vec3 pos = entities[selectedEntity].getPosition();
+                    glm::vec3 rot = entities[selectedEntity].getRotation();
+                    float scale = entities[selectedEntity].getScale();
+                    if (ImGui::DragFloat3("Position", &pos.x, 0.01f))
+                        entities[selectedEntity].setPosition(pos);
+                    if (ImGui::DragFloat3("Rotation", &rot.x, 0.5f))
+                        entities[selectedEntity].setRotation(rot);
+                    if (ImGui::DragFloat("Scale", &scale, 0.01f, 0.1f, 10.0f))
+                        entities[selectedEntity].setScale(scale);
+                }
+
+                if (ImGui::CollapsingHeader("Camera")) {
+                    glm::vec3 camPos = camera.getPosition();
+                    ImGui::Text("Pos: %.1f %.1f %.1f", camPos.x, camPos.y, camPos.z);
+                    if (ImGui::DragFloat3("Position##cam", &camPos.x, 0.02f))
+                        camera.setPosition(camPos);
+                }
             }
             ImGui::End();
-
-        } 
+        }
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

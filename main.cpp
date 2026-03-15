@@ -7,8 +7,8 @@
 #include "Engine/math/Math.h"
 #include "Engine/entities/Entity.h"
 #include <vector>
-
-#define EDITOR_MODE
+//
+//#define EDITOR_MODE
 
 #ifdef EDITOR_MODE
 #include "Engine/Core/Editor/Editor.h"
@@ -67,7 +67,7 @@ int main() {
         20, 21, 22,  22, 23, 20
     };
 
-    Texture texture("Resource/pop_cat.png");
+    Texture texture("Resource/Textures/texture.png");
 
     Loader loader;
     RawModel model = loader.loadToVAO(positions, 72, indices, 36, texCoords, 48, texture);

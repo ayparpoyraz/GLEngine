@@ -1506,7 +1506,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\pop_cat.png">
+    <Image Include="Resource\Textures\pop_cat.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\Textures\texture.png">
       <Filter>Kaynak Dosyaları</Filter>
     </Image>
   </ItemGroup>

@@ -646,7 +646,8 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="GameEngine.slnx" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\pop_cat.png" />
+    <Image Include="Resource\Textures\pop_cat.png" />
+    <Image Include="Resource\Textures\texture.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

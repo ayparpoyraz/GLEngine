@@ -1,5 +1,13 @@
 #include "Display.h"
 
+static float lastX = 600.0f;
+static float lastY = 400.0f;
+static float xOffset = 0.0f;
+static float yOffset = 0.0f;
+static float scrollOffset = 0.0f;
+static bool firstMouse = true;
+
+
 void framebuffer_size_callback(GLFWwindow* window, int WIDTH, int HEIGHT) {
 	glViewport(0, 0, WIDTH, HEIGHT);
 }
@@ -26,6 +34,7 @@ GLFWwindow* createWindow(int WIDTH, int HEIGHT, const char* TITLE) {
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouseCallback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cerr << "GLAD cannot be Started!\n";
@@ -37,6 +46,30 @@ GLFWwindow* createWindow(int WIDTH, int HEIGHT, const char* TITLE) {
 
 	return window;
 }
+void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+    if (firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    xOffset = xpos - lastX;
+    yOffset = lastY - ypos; 
+    lastX = xpos;
+    lastY = ypos;
+}
+
+float getMouseXOffset() { return xOffset; }
+float getMouseYOffset() { return yOffset; }
+void resetMouseOffset() { xOffset = 0.0f; yOffset = 0.0f; }
+
+
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+    scrollOffset = yoffset;
+}
+
+float getScrollOffset() { return scrollOffset; }
+void resetScrollOffset() { scrollOffset = 0.0f; }
 
 GLFWwindow* createFullScreen(int WIDTH, int HEIGHT, const char* TITLE) {
 
@@ -73,6 +106,8 @@ GLFWwindow* createFullScreen(int WIDTH, int HEIGHT, const char* TITLE) {
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouseCallback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "GLAD cannot be started!\n";
