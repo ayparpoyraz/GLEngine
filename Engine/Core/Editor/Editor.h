@@ -1,14 +1,14 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "../Display/Display.h"
-#include "../models/RawModel.h"
-#include "../Renderer/Renderer.h"
-#include "../shaders/StaticShader.h"
-#include "../Math/Math.h"
-#include "../Entities/Entity.h"
-#include "../Camera/Camera.h"
-#include "../Camera/FreeCamera.h"
+#include "../../Display/Display.h"
+#include "../../models/RawModel.h"
+#include "../../Renderer/Renderer.h"
+#include "../../shaders/StaticShader.h"
+#include "../../Math/Math.h"
+#include "../../Entities/Entity.h"
+#include "../../Camera/Camera.h"
+#include "../../Camera/FreeCamera.h"
 #include <vector>
 
 enum class CameraMode {
@@ -30,4 +30,6 @@ private:
     FreeCamera camera;
     void processInput(GLFWwindow* window);
     void applyEditorTheme();
+    bool isMenuVisible = true;
+    bool isStarted = false;
 };
