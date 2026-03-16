@@ -3,7 +3,7 @@
 #include "../Display/Display.h"
 #include "../models/RawModel.h"
 #include "../Renderer/Renderer.h"
-#include "../shaders/StaticShader.h"
+#include "../Shaders/StaticShader.h"
 #include "../Math/Math.h"
 #include "../Entities/Entity.h"
 #include "../Camera/FreeCamera.h"

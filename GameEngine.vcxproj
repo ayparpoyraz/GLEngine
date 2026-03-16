@@ -167,8 +167,8 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Engine\Display\Display.cpp" />
     <ClCompile Include="Engine\Renderer\Loader\Loader.cpp" />
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
-    <ClCompile Include="Engine\shaders\ShaderProgram.cpp" />
-    <ClCompile Include="Engine\shaders\StaticShader.cpp" />
+    <ClCompile Include="Engine\Shaders\ShaderProgram.cpp" />
+    <ClCompile Include="Engine\Shaders\StaticShader.cpp" />
     <ClCompile Include="Engine\TextureLoader\Texture.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
@@ -493,8 +493,8 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Engine\Renderer\Loader\VBO.h" />
     <ClInclude Include="Engine\Renderer\Loader\EBO.h" />
     <ClInclude Include="Engine\Renderer\Renderer.h" />
-    <ClInclude Include="Engine\shaders\ShaderProgram.h" />
-    <ClInclude Include="Engine\shaders\StaticShader.h" />
+    <ClInclude Include="Engine\Shaders\ShaderProgram.h" />
+    <ClInclude Include="Engine\Shaders\StaticShader.h" />
     <ClInclude Include="Engine\TextureLoader\Texture.h" />
   </ItemGroup>
   <ItemGroup>
@@ -641,13 +641,24 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="dependencies\include\glm\gtx\vector_angle.inl" />
     <None Include="dependencies\include\glm\gtx\vector_query.inl" />
     <None Include="dependencies\include\glm\gtx\wrap.inl" />
-    <None Include="Engine\shaders\fragment.glsl" />
-    <None Include="Engine\shaders\vertex.glsl" />
+    <None Include="Engine\Shaders\fragment.glsl" />
+    <None Include="Engine\Shaders\vertex.glsl" />
     <None Include="GameEngine.slnx" />
+    <None Include="Resource\OBJs\cube.mtl.mtl" />
+    <None Include="Resource\OBJs\stall.blend" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Textures\pop_cat.png" />
+    <Image Include="Resource\Textures\stallTexture.png" />
     <Image Include="Resource\Textures\texture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\OBJs\cube.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Resource\OBJs\stall.obj">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

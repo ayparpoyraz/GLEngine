@@ -5,7 +5,7 @@
 
 class Texture {
 public:
-	Texture(const std::string& path);
+	Texture(const std::string& fileName);
 	void bind() const;
 	void unbind() const;
 	void cleanUp();

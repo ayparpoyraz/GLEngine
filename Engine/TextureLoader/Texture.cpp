@@ -3,8 +3,8 @@
 #include <iostream>
 
 
-Texture::Texture(const std::string& path) {
-    load(path);
+Texture::Texture(const std::string& fileName) {
+    load("Resource/Textures/"+fileName+".png");
 }
 
 void Texture::load(const std::string& path) {

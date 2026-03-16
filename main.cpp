@@ -6,9 +6,10 @@
 #include "Engine/TextureLoader/Texture.h"
 #include "Engine/math/Math.h"
 #include "Engine/entities/Entity.h"
+#include "Engine/OBJLoader/OBJLoader.h"
 #include <vector>
 //
-//#define EDITOR_MODE
+#define EDITOR_MODE
 
 #ifdef EDITOR_MODE
 #include "Engine/Core/Editor/Editor.h"
@@ -67,10 +68,17 @@ int main() {
         20, 21, 22,  22, 23, 20
     };
 
-    Texture texture("Resource/Textures/texture.png");
-
     Loader loader;
-    RawModel model = loader.loadToVAO(positions, 72, indices, 36, texCoords, 48, texture);
+
+
+    Texture texture("stallTexture");
+    //RawModel model = loader.loadToVAO(
+    //    positions, 72,
+    //    indices, 36,
+    //    texCoords, 48,
+    //    texture
+    //);
+    RawModel model = OBJLoader::loadOBJ("stall", loader, texture);
 
     std::vector<Entity> entities = {
         Entity(model, glm::vec3(2.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f)

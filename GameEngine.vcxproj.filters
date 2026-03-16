@@ -36,10 +36,10 @@
     <ClCompile Include="Engine\models\RawModel.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\shaders\StaticShader.cpp">
+    <ClCompile Include="Engine\Shaders\StaticShader.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\shaders\ShaderProgram.cpp">
+    <ClCompile Include="Engine\Shaders\ShaderProgram.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\include\imgui\imgui.cpp">
@@ -137,10 +137,10 @@
     <ClInclude Include="Engine\models\RawModel.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\shaders\ShaderProgram.h">
+    <ClInclude Include="Engine\Shaders\ShaderProgram.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\shaders\StaticShader.h">
+    <ClInclude Include="Engine\Shaders\StaticShader.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
     <ClInclude Include="dependencies\include\imgui\imconfig.h">
@@ -1082,8 +1082,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GameEngine.slnx" />
-    <None Include="Engine\shaders\fragment.glsl" />
-    <None Include="Engine\shaders\vertex.glsl" />
+    <None Include="Engine\Shaders\fragment.glsl" />
+    <None Include="Engine\Shaders\vertex.glsl" />
     <None Include="dependencies\include\glm\detail\func_common.inl">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </None>
@@ -1504,12 +1504,19 @@
     <None Include="dependencies\include\glm\gtx\wrap.inl">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </None>
+    <None Include="Resource\OBJs\stall.blend" />
+    <None Include="Resource\OBJs\cube.mtl.mtl" />
+    <None Include="Resource\OBJs\stall.obj" />
+    <None Include="Resource\OBJs\cube.obj" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Textures\pop_cat.png">
       <Filter>Kaynak Dosyaları</Filter>
     </Image>
     <Image Include="Resource\Textures\texture.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\Textures\stallTexture.png">
       <Filter>Kaynak Dosyaları</Filter>
     </Image>
   </ItemGroup>
