@@ -9,4 +9,5 @@
 class OBJLoader {
 public:
     static RawModel loadOBJ(const std::string& path, Loader& loader, Texture texture);
+
 };  

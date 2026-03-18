@@ -2,9 +2,9 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include <filesystem>
 
 void Editor::applyEditorTheme() {
-    
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontFromFileTTF("Resource/fonts/Roboto-Regular.ttf", 15.0f);
     ImGuiStyle& style = ImGui::GetStyle();
@@ -43,7 +43,24 @@ void Editor::applyEditorTheme() {
     style.Colors[ImGuiCol_TabActive] = ImVec4(0.18f, 0.18f, 0.18f, 1.00f);
 }
 
-void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& defaultModel) {
+void Editor::scanResources() {
+    modelFiles.clear();
+    textureFiles.clear();
+
+    if (std::filesystem::exists("Resource/OBJs/")) {
+        for (auto& entry : std::filesystem::directory_iterator("Resource/OBJs/"))
+            if (entry.path().extension() == ".obj")
+                modelFiles.push_back(entry.path().filename().string()); 
+    }
+
+    if (std::filesystem::exists("Resource/Textures/")) {
+        for (auto& entry : std::filesystem::directory_iterator("Resource/Textures/"))
+            if (entry.path().extension() == ".png" || entry.path().extension() == ".jpg")
+                textureFiles.push_back(entry.path().filename().string()); 
+    }
+}
+
+bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -51,9 +68,12 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
     ImGui_ImplOpenGL3_Init("#version 330");
     applyEditorTheme();
 
+    int screenWidth, screenHeight;
+    glfwGetWindowSize(window, &screenWidth, &screenHeight);
+
     glm::mat4 projection = glm::perspective(
         glm::radians(70.0f),
-        1200.0f / 800.0f,
+        (float)screenWidth / (float)screenHeight,
         0.1f,
         1000.0f
     );
@@ -69,9 +89,11 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
     bool autoRotate = true;
     bool isStarted = false;
     bool isMenuVisible = true;
+    bool showAddEntityPopup = false;
+    int selectedModelIdx = 0;
+    int selectedTextureIdx = 0;
 
     while (!glfwWindowShouldClose(window)) {
-        int screenWidth, screenHeight;
         glfwGetWindowSize(window, &screenWidth, &screenHeight);
 
         float currentFrame = glfwGetTime();
@@ -89,7 +111,6 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
             insertPressed = false;
         }
 
-        processInput(window);
         camera.processKeyboard(window, deltaTime);
 
         if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
@@ -99,16 +120,17 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
         else {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         }
-        
 
-        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
+        if (!entities.empty() && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
             glm::vec3 rot = entities[selectedEntity].getRotation();
             rot.y += getMouseXOffset() * 0.5f;
             rot.x += getMouseYOffset() * 0.5f;
             entities[selectedEntity].setRotation(rot);
         }
+
         resetScrollOffset();
         resetMouseOffset();
+
         if (autoRotate) rotation += 0.5f;
 
         renderer.prepare();
@@ -143,9 +165,10 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                     ImGui::EndMenu();
                 }
                 if (ImGui::BeginMenu("Add")) {
-                    if (ImGui::MenuItem("Entity"))
-                        entities.push_back(Entity(defaultModel, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f,
-                            "Entity_" + std::to_string(entities.size())));
+                    if (ImGui::MenuItem("Entity")) {
+                        scanResources();
+                        showAddEntityPopup = true;
+                    }
                     ImGui::EndMenu();
                 }
                 if (ImGui::BeginMenu("View")) {
@@ -155,10 +178,6 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                 if (ImGui::BeginMenu("Camera")) {
                     if (ImGui::MenuItem("Free Camera", nullptr, currentMode == CameraMode::Free))
                         currentMode = CameraMode::Free;
-                    if (ImGui::MenuItem("FPS Camera", nullptr, currentMode == CameraMode::FPS))
-                        currentMode = CameraMode::FPS;
-                    if (ImGui::MenuItem("Orbit Camera", nullptr, currentMode == CameraMode::Orbit))
-                        currentMode = CameraMode::Orbit;
                     ImGui::EndMenu();
                 }
 
@@ -175,8 +194,11 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.4f, 0.1f, 1.0f));
                     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.6f, 0.2f, 1.0f));
                 }
-                if (ImGui::Button(isStarted ? " Stop " : " Start "))
+                if (ImGui::Button(isStarted ? " Stop " : " Start ")) {
                     isStarted = !isStarted;
+                    if (isStarted)
+                        glfwSetWindowShouldClose(window, true);
+                }
                 ImGui::PopStyleColor(3);
 
                 ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 120);
@@ -184,6 +206,61 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                 ImGui::EndMainMenuBar();
             }
 
+            // Add Entity Popup
+            if (showAddEntityPopup)
+                ImGui::OpenPopup("Add Entity");
+
+            if (ImGui::BeginPopupModal("Add Entity", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+                ImGui::Text("Model Sec:");
+                ImGui::Separator();
+                ImGui::BeginChild("ModelList", ImVec2(300, 150), true);
+                for (int i = 0; i < (int)modelFiles.size(); i++) {
+                    if (ImGui::Selectable(modelFiles[i].c_str(), selectedModelIdx == i))
+                        selectedModelIdx = i;
+                }
+                ImGui::EndChild();
+
+                ImGui::Spacing();
+                ImGui::Text("Texture Sec:");
+                ImGui::Separator();
+                ImGui::BeginChild("TextureList", ImVec2(300, 150), true);
+                for (int i = 0; i < (int)textureFiles.size(); i++) {
+                    if (ImGui::Selectable(textureFiles[i].c_str(), selectedTextureIdx == i))
+                        selectedTextureIdx = i;
+                }
+                ImGui::EndChild();
+
+                ImGui::Spacing();
+                ImGui::Separator();
+
+                if (ImGui::Button("Ekle", ImVec2(140, 0))) {
+                    if (!modelFiles.empty() && !textureFiles.empty()) {
+         
+                        std::string modelName = modelFiles[selectedModelIdx];
+                        modelName = modelName.substr(0, modelName.find_last_of('.'));
+
+                        std::string texName = textureFiles[selectedTextureIdx];
+                        texName = texName.substr(0, texName.find_last_of('.'));
+
+                        Texture tex(texName);
+                        RawModel newModel = OBJLoader::loadOBJ(modelName, loader, tex);
+                        entities.push_back(Entity(newModel,
+                            glm::vec3(0.0f, 0.0f, -3.0f),
+                            glm::vec3(0.0f), 1.0f,
+                            modelName));
+                    }
+                    showAddEntityPopup = false;
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Iptal", ImVec2(140, 0))) {
+                    showAddEntityPopup = false;
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::EndPopup();
+            }
+
+            // Sol panel
             ImGui::SetNextWindowPos(ImVec2(0, 20));
             ImGui::SetNextWindowSize(ImVec2(200, screenHeight - 20));
             ImGui::Begin("Scene Entities", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
@@ -194,9 +271,10 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                     selectedEntity = i;
             }
             ImGui::Separator();
-            if (ImGui::Button("+ Add Entity", ImVec2(-1, 0)))
-                entities.push_back(Entity(defaultModel, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f,
-                    "Entity_" + std::to_string(entities.size())));
+            if (ImGui::Button("+ Add Entity", ImVec2(-1, 0))) {
+                scanResources();
+                showAddEntityPopup = true;
+            }
             if (!entities.empty()) {
                 if (ImGui::Button("- Remove Entity", ImVec2(-1, 0))) {
                     entities.erase(entities.begin() + selectedEntity);
@@ -206,18 +284,16 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
             }
             ImGui::End();
 
+            // Sag panel
             ImGui::SetNextWindowPos(ImVec2(screenWidth - 210, 20));
             ImGui::SetNextWindowSize(ImVec2(210, screenHeight - 25));
             ImGui::Begin("Properties", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
-
             if (!entities.empty() && selectedEntity < (int)entities.size()) {
                 char nameBuf[64];
                 strncpy_s(nameBuf, entities[selectedEntity].getEntityName().c_str(), sizeof(nameBuf));
                 if (ImGui::InputText("##name", nameBuf, sizeof(nameBuf)))
                     entities[selectedEntity].setName(nameBuf);
-
                 ImGui::Separator();
-
                 if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
                     glm::vec3 pos = entities[selectedEntity].getPosition();
                     glm::vec3 rot = entities[selectedEntity].getRotation();
@@ -229,7 +305,6 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
                     if (ImGui::DragFloat("Scale", &scale, 0.01f, 0.1f, 10.0f))
                         entities[selectedEntity].setScale(scale);
                 }
-
                 if (ImGui::CollapsingHeader("Camera")) {
                     glm::vec3 camPos = camera.getPosition();
                     ImGui::Text("Pos: %.1f %.1f %.1f", camPos.x, camPos.y, camPos.z);
@@ -251,9 +326,6 @@ void Editor::run(GLFWwindow* window, std::vector<Entity>& entities, RawModel& de
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
     shader.cleanUp();
-}
 
-void Editor::processInput(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+    return isStarted;
 }

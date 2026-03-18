@@ -645,6 +645,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="Engine\Shaders\vertex.glsl" />
     <None Include="GameEngine.slnx" />
     <None Include="Resource\OBJs\cube.mtl.mtl" />
+    <None Include="Resource\OBJs\DragonBlender.blend" />
     <None Include="Resource\OBJs\stall.blend" />
   </ItemGroup>
   <ItemGroup>
@@ -657,6 +658,11 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <FileType>Document</FileType>
     </None>
     <None Include="Resource\OBJs\stall.obj">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\OBJs\dragon.obj">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

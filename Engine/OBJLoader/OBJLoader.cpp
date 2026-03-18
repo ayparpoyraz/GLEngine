@@ -27,21 +27,28 @@ RawModel OBJLoader::loadOBJ(const std::string& fileName, Loader& loader, Texture
         std::string prefix;
         ss >> prefix;
 
+        //vertex
         if (prefix == "v") {
             glm::vec3 pos;
             ss >> pos.x >> pos.y >> pos.z;
             positions.push_back(pos);
         }
+
+        //vertex-texture
         else if (prefix == "vt") {
             glm::vec2 tex;
             ss >> tex.x >> tex.y;
             texCoords.push_back(tex);
         }
+
+        //vertex-normal
         else if (prefix == "vn") {
             glm::vec3 norm;
             ss >> norm.x >> norm.y >> norm.z;
             normals.push_back(norm);
         }
+
+        //face
         else if (prefix == "f") {
             std::vector<std::string> verts;
             std::string v;

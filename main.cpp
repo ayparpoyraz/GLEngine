@@ -8,88 +8,50 @@
 #include "Engine/entities/Entity.h"
 #include "Engine/OBJLoader/OBJLoader.h"
 #include <vector>
-//
+
 #define EDITOR_MODE
 
 #ifdef EDITOR_MODE
 #include "Engine/Core/Editor/Editor.h"
-GLFWwindow* window = createWindow(1920, 1080, "GameEngine");
+#include "Engine/Core/GameLoop.h"  
 #else
 #include "Engine/Core/GameLoop.h"
-GLFWwindow* window = createFullScreen(1920, 1080, "GameEngine");
 #endif
 
 int main() {
-   
+
+#ifdef EDITOR_MODE
+    GLFWwindow* window = createWindow(1920, 1080, "HolyEngine");
+#else
+    GLFWwindow* window = createFullScreen(1920, 1080, "Game");
+#endif
+
     if (!window) return -1;
 
-    float positions[] = {
-        -0.5f,  0.5f,  0.5f,
-        -0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f, -0.5f,  0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f,  0.5f,
-         0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f, -0.5f,
-         0.5f, -0.5f,  0.5f
-    };
-
-    float texCoords[] = {
-        0.0f, 1.0f,  0.0f, 0.0f,  1.0f, 0.0f,  1.0f, 1.0f,
-        0.0f, 1.0f,  0.0f, 0.0f,  1.0f, 0.0f,  1.0f, 1.0f,
-        0.0f, 1.0f,  0.0f, 0.0f,  1.0f, 0.0f,  1.0f, 1.0f,
-        0.0f, 1.0f,  0.0f, 0.0f,  1.0f, 0.0f,  1.0f, 1.0f,
-        0.0f, 1.0f,  0.0f, 0.0f,  1.0f, 0.0f,  1.0f, 1.0f,
-        0.0f, 1.0f,  0.0f, 0.0f,  1.0f, 0.0f,  1.0f, 1.0f
-    };
-
-    unsigned int indices[] = {
-        0,  1,  2,   2,  3,  0,
-        4,  5,  6,   6,  7,  4,
-        8,  9,  10,  10, 11, 8,
-        12, 13, 14,  14, 15, 12,
-        16, 17, 18,  18, 19, 16,
-        20, 21, 22,  22, 23, 20
-    };
-
     Loader loader;
-
-
-    Texture texture("stallTexture");
-    //RawModel model = loader.loadToVAO(
-    //    positions, 72,
-    //    indices, 36,
-    //    texCoords, 48,
-    //    texture
-    //);
-    RawModel model = OBJLoader::loadOBJ("stall", loader, texture);
+    Texture texture("pop_cat");
+    RawModel model = OBJLoader::loadOBJ("cube", loader, texture);
 
     std::vector<Entity> entities = {
         Entity(model, glm::vec3(2.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f)
     };
 
 #ifdef EDITOR_MODE
-    Editor loop;
-    loop.run(window, entities, model);
+    Editor editor;
+    bool startGame = editor.run(window, entities/*, model*/);
+    glfwDestroyWindow(window);
+
+    if (startGame) {
+        GLFWwindow* gameWindow = createFullScreen(1920, 1080, "Game");
+        if (gameWindow) {
+            GameLoop game;
+            game.run(gameWindow, entities);
+            glfwDestroyWindow(gameWindow);
+        }
+    }
 #else
-    GameLoop loop;
-    loop.run(window, entities);
+    GameLoop game;
+    game.run(window, entities);
 #endif
 
     glfwTerminate();
