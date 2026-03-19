@@ -9,5 +9,6 @@
 class Renderer {
 public:
     void prepare();
+    void setWireframe(bool enable);
     void render(RawModel& model);
 };

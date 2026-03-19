@@ -172,7 +172,10 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                     ImGui::EndMenu();
                 }
                 if (ImGui::BeginMenu("View")) {
-                    ImGui::MenuItem("Wireframe");
+                    if (ImGui::MenuItem("Wireframe", nullptr, wireframe)) {
+                        wireframe = !wireframe;
+                        renderer.setWireframe(wireframe);
+                    }
                     ImGui::EndMenu();
                 }
                 if (ImGui::BeginMenu("Camera")) {
@@ -180,6 +183,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                         currentMode = CameraMode::Free;
                     ImGui::EndMenu();
                 }
+
 
                 float buttonWidth = 70.0f;
                 float windowWidth = ImGui::GetWindowWidth();
@@ -211,7 +215,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 ImGui::OpenPopup("Add Entity");
 
             if (ImGui::BeginPopupModal("Add Entity", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-                ImGui::Text("Model Sec:");
+                ImGui::Text("Select Model:");
                 ImGui::Separator();
                 ImGui::BeginChild("ModelList", ImVec2(300, 150), true);
                 for (int i = 0; i < (int)modelFiles.size(); i++) {
@@ -221,7 +225,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 ImGui::EndChild();
 
                 ImGui::Spacing();
-                ImGui::Text("Texture Sec:");
+                ImGui::Text("Select texture:");
                 ImGui::Separator();
                 ImGui::BeginChild("TextureList", ImVec2(300, 150), true);
                 for (int i = 0; i < (int)textureFiles.size(); i++) {
@@ -233,7 +237,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 ImGui::Spacing();
                 ImGui::Separator();
 
-                if (ImGui::Button("Ekle", ImVec2(140, 0))) {
+                if (ImGui::Button("Add", ImVec2(140, 0))) {
                     if (!modelFiles.empty() && !textureFiles.empty()) {
          
                         std::string modelName = modelFiles[selectedModelIdx];
@@ -253,14 +257,13 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                     ImGui::CloseCurrentPopup();
                 }
                 ImGui::SameLine();
-                if (ImGui::Button("Iptal", ImVec2(140, 0))) {
+                if (ImGui::Button("Cancel", ImVec2(140, 0))) {
                     showAddEntityPopup = false;
                     ImGui::CloseCurrentPopup();
                 }
                 ImGui::EndPopup();
             }
 
-            // Sol panel
             ImGui::SetNextWindowPos(ImVec2(0, 20));
             ImGui::SetNextWindowSize(ImVec2(200, screenHeight - 20));
             ImGui::Begin("Scene Entities", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
@@ -283,8 +286,6 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 }
             }
             ImGui::End();
-
-            // Sag panel
             ImGui::SetNextWindowPos(ImVec2(screenWidth - 210, 20));
             ImGui::SetNextWindowSize(ImVec2(210, screenHeight - 25));
             ImGui::Begin("Properties", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);

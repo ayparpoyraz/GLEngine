@@ -35,8 +35,10 @@ private:
     Renderer renderer;
     StaticShader shader;
     FreeCamera camera;
+    
     //void processInput(GLFWwindow* window);
     void applyEditorTheme();
     bool isMenuVisible = true;
     bool isStarted = false;
+    bool wireframe =  false;
 };

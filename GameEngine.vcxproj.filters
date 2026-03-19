@@ -131,7 +131,7 @@
     <ClInclude Include="Engine\Core\GameLoop.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Renderer\Renderer.h">
+    <ClInclude Include="Engine\TextureLoader\Renderer.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
     <ClInclude Include="Engine\models\RawModel.h">

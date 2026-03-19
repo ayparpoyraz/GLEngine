@@ -5,9 +5,12 @@
 
 void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
+    int screenWidth, screenHeight;
+    glfwGetWindowSize(window, &screenWidth, &screenHeight);
+
     glm::mat4 projection = glm::perspective(
         glm::radians(70.0f),
-        1200.0f / 800.0f,
+        (float)screenWidth / (float)screenHeight,
         0.1f,
         1000.0f
     );
@@ -18,6 +21,7 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
     shader.StopShader();
 
     float lastFrame = 0.0f;
+    int selectedEntity = 0;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
@@ -25,11 +29,28 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
         lastFrame = currentFrame;
 
         processInput(window);
-        camera.processKeyboard(window, deltaTime);  
+        camera.processKeyboard(window, deltaTime);
+
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            camera.processMouse(getMouseXOffset(), getMouseYOffset());
+        }
+        else {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+
+        if (!entities.empty() && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
+            glm::vec3 rot = entities[selectedEntity].getRotation(); // ← düzeltildi
+            rot.y += getMouseXOffset() * 0.5f;
+            rot.x += getMouseYOffset() * 0.5f;
+            entities[selectedEntity].setRotation(rot);
+        }
+
+        resetScrollOffset();
+        resetMouseOffset();
 
         renderer.prepare();
         shader.StartShader();
-
         shader.loadViewMatrix(camera.getViewMatrix());
 
         for (Entity& entity : entities) {

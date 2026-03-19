@@ -492,7 +492,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Engine\Renderer\Loader\VAO.h" />
     <ClInclude Include="Engine\Renderer\Loader\VBO.h" />
     <ClInclude Include="Engine\Renderer\Loader\EBO.h" />
-    <ClInclude Include="Engine\Renderer\Renderer.h" />
+    <ClInclude Include="Engine\TextureLoader\Renderer.h" />
     <ClInclude Include="Engine\Shaders\ShaderProgram.h" />
     <ClInclude Include="Engine\Shaders\StaticShader.h" />
     <ClInclude Include="Engine\TextureLoader\Texture.h" />
