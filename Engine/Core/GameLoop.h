@@ -19,5 +19,5 @@ private:
     StaticShader shader;
     FreeCamera camera;
     void processInput(GLFWwindow* window);
-    void applyEditorTheme();
+
 };

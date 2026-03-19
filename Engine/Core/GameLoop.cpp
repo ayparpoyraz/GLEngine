@@ -40,7 +40,7 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
         }
 
         if (!entities.empty() && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
-            glm::vec3 rot = entities[selectedEntity].getRotation(); // ← düzeltildi
+            glm::vec3 rot = entities[selectedEntity].getRotation(); 
             rot.y += getMouseXOffset() * 0.5f;
             rot.x += getMouseYOffset() * 0.5f;
             entities[selectedEntity].setRotation(rot);

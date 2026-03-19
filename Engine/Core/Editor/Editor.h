@@ -9,6 +9,7 @@
 #include "../../Entities/Entity.h"
 #include "../../Camera/Camera.h"
 #include "../../Camera/FreeCamera.h"
+#include "../../Camera/OrbitCamera.h"
 #include "../../OBJLoader/OBJLoader.h"
 #include "../../Renderer/Loader/Loader.h"
 #include <vector>
@@ -35,6 +36,7 @@ private:
     Renderer renderer;
     StaticShader shader;
     FreeCamera camera;
+    OrbitCamera orbitCamera{ glm::vec3(0.0f), 5.0f };
     
     //void processInput(GLFWwindow* window);
     void applyEditorTheme();

@@ -152,6 +152,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="dependencies\include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Camera\Camera.cpp" />
     <ClCompile Include="Engine\Camera\FreeCamera.cpp" />
+    <ClCompile Include="Engine\Camera\OrbitCamera.cpp" />
     <ClCompile Include="Engine\Core\Editor\Editor.cpp" />
     <ClCompile Include="Engine\Core\GameLoop.cpp" />
     <ClCompile Include="Engine\Entities\Entity.cpp" />
@@ -480,6 +481,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="dependencies\include\stb\stb_image.h" />
     <ClInclude Include="Engine\Camera\Camera.h" />
     <ClInclude Include="Engine\Camera\FreeCamera.h" />
+    <ClInclude Include="Engine\Camera\OrbitCamera.h" />
     <ClInclude Include="Engine\Core\Editor\Editor.h" />
     <ClInclude Include="Engine\Core\GameLoop.h" />
     <ClInclude Include="Engine\Input\Input.h" />
@@ -492,7 +494,7 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Engine\Renderer\Loader\VAO.h" />
     <ClInclude Include="Engine\Renderer\Loader\VBO.h" />
     <ClInclude Include="Engine\Renderer\Loader\EBO.h" />
-    <ClInclude Include="Engine\TextureLoader\Renderer.h" />
+    <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\Shaders\ShaderProgram.h" />
     <ClInclude Include="Engine\Shaders\StaticShader.h" />
     <ClInclude Include="Engine\TextureLoader\Texture.h" />

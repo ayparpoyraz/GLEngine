@@ -62,11 +62,14 @@ void Editor::scanResources() {
 
 bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
+
+    //IMGUI::INIT
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
     applyEditorTheme();
+    //IMGUI::INITEND
 
     int screenWidth, screenHeight;
     glfwGetWindowSize(window, &screenWidth, &screenHeight);
@@ -122,10 +125,11 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
         }
 
         if (!entities.empty() && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
-            glm::vec3 rot = entities[selectedEntity].getRotation();
-            rot.y += getMouseXOffset() * 0.5f;
-            rot.x += getMouseYOffset() * 0.5f;
-            entities[selectedEntity].setRotation(rot);
+            orbitCamera.processMouse(getMouseXOffset(), getMouseYOffset());
+            shader.loadViewMatrix(orbitCamera.getViewMatrix());
+        }
+        else{
+            shader.loadViewMatrix(camera.getViewMatrix());
         }
 
         resetScrollOffset();
@@ -209,8 +213,6 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
                 ImGui::EndMainMenuBar();
             }
-
-            // Add Entity Popup
             if (showAddEntityPopup)
                 ImGui::OpenPopup("Add Entity");
 
