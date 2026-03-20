@@ -3,6 +3,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include <filesystem>
+#include <iostream>
 
 void Editor::applyEditorTheme() {
     ImGuiIO& io = ImGui::GetIO();
@@ -50,26 +51,23 @@ void Editor::scanResources() {
     if (std::filesystem::exists("Resource/OBJs/")) {
         for (auto& entry : std::filesystem::directory_iterator("Resource/OBJs/"))
             if (entry.path().extension() == ".obj")
-                modelFiles.push_back(entry.path().filename().string()); 
+                modelFiles.push_back(entry.path().filename().string());
     }
 
     if (std::filesystem::exists("Resource/Textures/")) {
         for (auto& entry : std::filesystem::directory_iterator("Resource/Textures/"))
             if (entry.path().extension() == ".png" || entry.path().extension() == ".jpg")
-                textureFiles.push_back(entry.path().filename().string()); 
+                textureFiles.push_back(entry.path().filename().string());
     }
 }
 
 bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
-
-    //IMGUI::INIT
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
     applyEditorTheme();
-    //IMGUI::INITEND
 
     int screenWidth, screenHeight;
     glfwGetWindowSize(window, &screenWidth, &screenHeight);
@@ -86,10 +84,9 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
     shader.connectTextureUnits();
     shader.StopShader();
 
-    float rotation = 0.0f;
     float lastFrame = 0.0f;
     int selectedEntity = 0;
-    bool autoRotate = true;
+    bool autoRotate = false;
     bool isStarted = false;
     bool isMenuVisible = true;
     bool showAddEntityPopup = false;
@@ -103,6 +100,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
         float deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        // INSERT toggle
         static bool insertPressed = false;
         if (glfwGetKey(window, GLFW_KEY_INSERT) == GLFW_PRESS) {
             if (!insertPressed) {
@@ -114,29 +112,11 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
             insertPressed = false;
         }
 
-        camera.processKeyboard(window, deltaTime);
 
-        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            camera.processMouse(getMouseXOffset(), getMouseYOffset());
-        }
-        else {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        }
-
-        if (!entities.empty() && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
-            orbitCamera.processMouse(getMouseXOffset(), getMouseYOffset());
-            shader.loadViewMatrix(orbitCamera.getViewMatrix());
-        }
-        else{
-            shader.loadViewMatrix(camera.getViewMatrix());
-        }
-
-        resetScrollOffset();
         resetMouseOffset();
+        resetScrollOffset();
 
-        if (autoRotate) rotation += 0.5f;
-
+        // render
         renderer.prepare();
         shader.StartShader();
         shader.loadViewMatrix(camera.getViewMatrix());
@@ -153,6 +133,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
         shader.StopShader();
 
+        // ImGui
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -185,9 +166,10 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 if (ImGui::BeginMenu("Camera")) {
                     if (ImGui::MenuItem("Free Camera", nullptr, currentMode == CameraMode::Free))
                         currentMode = CameraMode::Free;
+                    if (ImGui::MenuItem("Orbit Camera", nullptr, currentMode == CameraMode::Orbit))
+                        currentMode = CameraMode::Orbit;
                     ImGui::EndMenu();
                 }
-
 
                 float buttonWidth = 70.0f;
                 float windowWidth = ImGui::GetWindowWidth();
@@ -213,6 +195,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
                 ImGui::EndMainMenuBar();
             }
+
             if (showAddEntityPopup)
                 ImGui::OpenPopup("Add Entity");
 
@@ -227,7 +210,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 ImGui::EndChild();
 
                 ImGui::Spacing();
-                ImGui::Text("Select texture:");
+                ImGui::Text("Select Texture:");
                 ImGui::Separator();
                 ImGui::BeginChild("TextureList", ImVec2(300, 150), true);
                 for (int i = 0; i < (int)textureFiles.size(); i++) {
@@ -241,19 +224,15 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
                 if (ImGui::Button("Add", ImVec2(140, 0))) {
                     if (!modelFiles.empty() && !textureFiles.empty()) {
-         
                         std::string modelName = modelFiles[selectedModelIdx];
                         modelName = modelName.substr(0, modelName.find_last_of('.'));
-
                         std::string texName = textureFiles[selectedTextureIdx];
                         texName = texName.substr(0, texName.find_last_of('.'));
-
                         Texture tex(texName);
                         RawModel newModel = OBJLoader::loadOBJ(modelName, loader, tex);
                         entities.push_back(Entity(newModel,
                             glm::vec3(0.0f, 0.0f, -3.0f),
-                            glm::vec3(0.0f), 1.0f,
-                            modelName));
+                            glm::vec3(0.0f), 1.0f, modelName));
                     }
                     showAddEntityPopup = false;
                     ImGui::CloseCurrentPopup();
@@ -288,6 +267,7 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                 }
             }
             ImGui::End();
+
             ImGui::SetNextWindowPos(ImVec2(screenWidth - 210, 20));
             ImGui::SetNextWindowSize(ImVec2(210, screenHeight - 25));
             ImGui::Begin("Properties", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);

@@ -1,7 +1,4 @@
 #include "GameLoop.h"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
 
 void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
 
@@ -21,7 +18,6 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
     shader.StopShader();
 
     float lastFrame = 0.0f;
-    int selectedEntity = 0;
 
     while (!glfwWindowShouldClose(window)) {
         float currentFrame = glfwGetTime();
@@ -29,22 +25,9 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
         lastFrame = currentFrame;
 
         processInput(window);
-        camera.processKeyboard(window, deltaTime);
 
-        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            camera.processMouse(getMouseXOffset(), getMouseYOffset());
-        }
-        else {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        }
-
-        if (!entities.empty() && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
-            glm::vec3 rot = entities[selectedEntity].getRotation(); 
-            rot.y += getMouseXOffset() * 0.5f;
-            rot.x += getMouseYOffset() * 0.5f;
-            entities[selectedEntity].setRotation(rot);
-        }
+        camera.updateInput(window, deltaTime,
+            getMouseXOffset(), getMouseYOffset(), getScrollOffset());
 
         resetScrollOffset();
         resetMouseOffset();

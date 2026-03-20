@@ -6,7 +6,7 @@
 #include "../Shaders/StaticShader.h"
 #include "../Math/Math.h"
 #include "../Entities/Entity.h"
-#include "../Camera/FreeCamera.h"
+#include "../Camera/master/masterCamera.h"
 #include <vector>
 
 class GameLoop {
@@ -17,7 +17,7 @@ public:
 private:
     Renderer renderer;
     StaticShader shader;
-    FreeCamera camera;
+    masterCamera camera;
     void processInput(GLFWwindow* window);
 
 };
