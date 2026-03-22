@@ -1571,5 +1571,50 @@
     <Image Include="Resource\skybox\top.png">
       <Filter>Kaynak Dosyaları</Filter>
     </Image>
+    <Image Include="Resource\skybox\night moon\jettelly_moon_BACK.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\jettelly_moon_DOWN.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\jettelly_moon_FRONT.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\jettelly_moon_LEFT.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\jettelly_moon_RIGHT.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\jettelly_moon_UP.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\BACK.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\DOWN.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\FRONT.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\LEFT.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\RIGHT.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\night moon\UP.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\DOWN.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\UP.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
 </Project>

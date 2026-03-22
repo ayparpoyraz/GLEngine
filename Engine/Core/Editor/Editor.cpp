@@ -15,6 +15,7 @@ void Editor::applyEditorTheme() {
     style.GrabRounding = 3.0f;
     style.ItemSpacing = ImVec2(8, 6);
     style.WindowPadding = ImVec2(10, 10);
+
     style.Colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
     style.Colors[ImGuiCol_ChildBg] = ImVec4(0.12f, 0.12f, 0.12f, 1.00f);
     style.Colors[ImGuiCol_PopupBg] = ImVec4(0.12f, 0.12f, 0.12f, 1.00f);
@@ -22,26 +23,34 @@ void Editor::applyEditorTheme() {
     style.Colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.00f);
     style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.22f, 0.22f, 0.22f, 1.00f);
     style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.28f, 0.28f, 0.28f, 1.00f);
-    style.Colors[ImGuiCol_TitleBg] = ImVec4(0.05f, 0.10f, 0.20f, 1.00f); // koyu mavi
-    style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.08f, 0.15f, 0.30f, 1.00f); // aktif mavi
+
+
+    style.Colors[ImGuiCol_TitleBg] = ImVec4(0.25f, 0.03f, 0.03f, 1.00f);
+    style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.40f, 0.05f, 0.05f, 1.00f);
+
+
     style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);
+
     style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
     style.Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.25f, 0.25f, 0.25f, 1.00f);
     style.Colors[ImGuiCol_Button] = ImVec4(0.18f, 0.18f, 0.18f, 1.00f);
     style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.26f, 0.26f, 0.26f, 1.00f);
     style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.32f, 0.32f, 0.32f, 1.00f);
-    style.Colors[ImGuiCol_Header] = ImVec4(0.08f, 0.15f, 0.30f, 1.00f); // mavi header
-    style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.10f, 0.20f, 0.40f, 1.00f);
-    style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.12f, 0.25f, 0.50f, 1.00f);
-    style.Colors[ImGuiCol_Separator] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
+
+
+    style.Colors[ImGuiCol_Header] = ImVec4(0.35f, 0.05f, 0.05f, 1.00f);
+    style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.50f, 0.08f, 0.08f, 1.00f);
+    style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.65f, 0.10f, 0.10f, 1.00f);
+
+    style.Colors[ImGuiCol_Separator] = ImVec4(0.30f, 0.05f, 0.05f, 1.00f);
     style.Colors[ImGuiCol_Text] = ImVec4(0.85f, 0.85f, 0.85f, 1.00f);
     style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.40f, 0.40f, 0.40f, 1.00f);
-    style.Colors[ImGuiCol_SliderGrab] = ImVec4(0.10f, 0.20f, 0.40f, 1.00f); // mavi slider
-    style.Colors[ImGuiCol_SliderGrabActive] = ImVec4(0.12f, 0.25f, 0.50f, 1.00f);
-    style.Colors[ImGuiCol_CheckMark] = ImVec4(0.20f, 0.50f, 1.00f, 1.00f); // mavi checkmark
-    style.Colors[ImGuiCol_Tab] = ImVec4(0.05f, 0.10f, 0.20f, 1.00f); // mavi tab
-    style.Colors[ImGuiCol_TabHovered] = ImVec4(0.10f, 0.20f, 0.40f, 1.00f);
-    style.Colors[ImGuiCol_TabActive] = ImVec4(0.08f, 0.15f, 0.30f, 1.00f);
+    style.Colors[ImGuiCol_SliderGrab] = ImVec4(0.50f, 0.08f, 0.08f, 1.00f);
+    style.Colors[ImGuiCol_SliderGrabActive] = ImVec4(0.70f, 0.10f, 0.10f, 1.00f);
+    style.Colors[ImGuiCol_CheckMark] = ImVec4(0.90f, 0.15f, 0.15f, 1.00f);
+    style.Colors[ImGuiCol_Tab] = ImVec4(0.20f, 0.03f, 0.03f, 1.00f);
+    style.Colors[ImGuiCol_TabHovered] = ImVec4(0.35f, 0.05f, 0.05f, 1.00f);
+    style.Colors[ImGuiCol_TabActive] = ImVec4(0.25f, 0.04f, 0.04f, 1.00f);
 }
 
 void Editor::scanResources() {

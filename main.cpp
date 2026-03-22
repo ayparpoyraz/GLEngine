@@ -9,7 +9,7 @@
 #include "Engine/OBJLoader/OBJLoader.h"
 #include <vector>
 
-#define EDITOR_MODE
+//#define EDITOR_MODE
 
 #ifdef EDITOR_MODE
 #include "Engine/Core/Editor/Editor.h"
@@ -30,7 +30,7 @@ int main() {
 
     Loader loader;
     Texture texture("texture");
-    RawModel model = OBJLoader::loadOBJ("dragon", loader, texture);
+    RawModel model = OBJLoader::loadOBJ("cube", loader, texture);
 
     std::vector<Entity> entities = {
         Entity(model, glm::vec3(2.0f, 0.0f, -3.0f), glm::vec3(0.0f), 1.0f)

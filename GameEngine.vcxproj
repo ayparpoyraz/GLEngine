@@ -663,10 +663,24 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
   <ItemGroup>
     <Image Include="Resource\skybox\back.png" />
     <Image Include="Resource\skybox\bottom.png" />
+    <Image Include="Resource\skybox\DOWN.png" />
     <Image Include="Resource\skybox\front.png" />
     <Image Include="Resource\skybox\left.png" />
+    <Image Include="Resource\skybox\night moon\BACK.png" />
+    <Image Include="Resource\skybox\night moon\DOWN.png" />
+    <Image Include="Resource\skybox\night moon\FRONT.png" />
+    <Image Include="Resource\skybox\night moon\jettelly_moon_BACK.png" />
+    <Image Include="Resource\skybox\night moon\jettelly_moon_DOWN.png" />
+    <Image Include="Resource\skybox\night moon\jettelly_moon_FRONT.png" />
+    <Image Include="Resource\skybox\night moon\jettelly_moon_LEFT.png" />
+    <Image Include="Resource\skybox\night moon\jettelly_moon_RIGHT.png" />
+    <Image Include="Resource\skybox\night moon\jettelly_moon_UP.png" />
+    <Image Include="Resource\skybox\night moon\LEFT.png" />
+    <Image Include="Resource\skybox\night moon\RIGHT.png" />
+    <Image Include="Resource\skybox\night moon\UP.png" />
     <Image Include="Resource\skybox\right.png" />
     <Image Include="Resource\skybox\top.png" />
+    <Image Include="Resource\skybox\UP.png" />
     <Image Include="Resource\Textures\pop_cat.png" />
     <Image Include="Resource\Textures\stallTexture.png" />
     <Image Include="Resource\Textures\texture.png" />
@@ -683,6 +697,9 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="Resource\OBJs\dragon.obj">
       <FileType>Document</FileType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\Fonts\Roboto-Regular.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
