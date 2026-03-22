@@ -117,6 +117,15 @@
     <ClCompile Include="Engine\Camera\master\masterCamera.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Skybox\Skybox.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Skybox\shaders\SkyboxShaderProgram.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Skybox\shaders\StaticSkyboxShader.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\include\GLFW\glfw3.h">
@@ -1088,6 +1097,15 @@
     <ClInclude Include="Engine\Camera\master\masterCamera.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Skybox\Skybox.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Skybox\shaders\SkyBoxShaderProgram.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Skybox\shaders\StaticSkyboxShader.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="dependencies\lib\glfw3.lib" />
@@ -1522,6 +1540,8 @@
     <None Include="Resource\OBJs\cube.obj" />
     <None Include="Resource\OBJs\DragonBlender.blend" />
     <None Include="Resource\OBJs\dragon.obj" />
+    <None Include="Engine\Skybox\shaders\SkyboxVertex.glsl" />
+    <None Include="Engine\Skybox\shaders\SkyboxFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Textures\pop_cat.png">
@@ -1531,6 +1551,24 @@
       <Filter>Kaynak Dosyaları</Filter>
     </Image>
     <Image Include="Resource\Textures\stallTexture.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\back.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\bottom.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\front.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\left.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\right.png">
+      <Filter>Kaynak Dosyaları</Filter>
+    </Image>
+    <Image Include="Resource\skybox\top.png">
       <Filter>Kaynak Dosyaları</Filter>
     </Image>
   </ItemGroup>

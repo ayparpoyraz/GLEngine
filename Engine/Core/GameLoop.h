@@ -7,6 +7,7 @@
 #include "../Math/Math.h"
 #include "../Entities/Entity.h"
 #include "../Camera/master/masterCamera.h"
+#include "../Skybox/Skybox.h"
 #include <vector>
 
 class GameLoop {
@@ -18,6 +19,7 @@ private:
     Renderer renderer;
     StaticShader shader;
     masterCamera camera;
+
     void processInput(GLFWwindow* window);
 
-};
+};  

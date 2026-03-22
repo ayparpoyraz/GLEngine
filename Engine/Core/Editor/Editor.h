@@ -13,6 +13,7 @@
 #include "../../Camera/master/masterCamera.h"
 #include "../../OBJLoader/OBJLoader.h"
 #include "../../Renderer/Loader/Loader.h"
+#include "../../Skybox/Skybox.h"
 #include <vector>
 
 
@@ -38,6 +39,7 @@ private:
     Renderer renderer;
     StaticShader shader;
     masterCamera camera;
+    Skybox skybox;
     //OrbitCamera orbitCamera{ glm::vec3(0.0f), 5.0f };
     
     //void processInput(GLFWwindow* window);

@@ -12,6 +12,10 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
         1000.0f
     );
 
+    // skybox init
+    Skybox skybox;
+    skybox.init();
+
     shader.StartShader();
     shader.loadProjectionMatrix(projection);
     shader.connectTextureUnits();
@@ -33,6 +37,7 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
         resetMouseOffset();
 
         renderer.prepare();
+
         shader.StartShader();
         shader.loadViewMatrix(camera.getViewMatrix());
 
@@ -47,9 +52,12 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
         }
 
         shader.StopShader();
+        skybox.render(camera.getViewMatrix(), projection);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    skybox.cleanUp();
     shader.cleanUp();
 }
 

@@ -171,6 +171,9 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\Shaders\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Shaders\StaticShader.cpp" />
+    <ClCompile Include="Engine\Skybox\shaders\SkyboxShaderProgram.cpp" />
+    <ClCompile Include="Engine\Skybox\shaders\StaticSkyboxShader.cpp" />
+    <ClCompile Include="Engine\Skybox\Skybox.cpp" />
     <ClCompile Include="Engine\TextureLoader\Texture.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
@@ -499,6 +502,9 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\Shaders\ShaderProgram.h" />
     <ClInclude Include="Engine\Shaders\StaticShader.h" />
+    <ClInclude Include="Engine\Skybox\shaders\SkyBoxShaderProgram.h" />
+    <ClInclude Include="Engine\Skybox\shaders\StaticSkyboxShader.h" />
+    <ClInclude Include="Engine\Skybox\Skybox.h" />
     <ClInclude Include="Engine\TextureLoader\Texture.h" />
   </ItemGroup>
   <ItemGroup>
@@ -647,12 +653,20 @@ shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="dependencies\include\glm\gtx\wrap.inl" />
     <None Include="Engine\Shaders\fragment.glsl" />
     <None Include="Engine\Shaders\vertex.glsl" />
+    <None Include="Engine\Skybox\shaders\SkyboxFragment.glsl" />
+    <None Include="Engine\Skybox\shaders\SkyboxVertex.glsl" />
     <None Include="GameEngine.slnx" />
     <None Include="Resource\OBJs\cube.mtl.mtl" />
     <None Include="Resource\OBJs\DragonBlender.blend" />
     <None Include="Resource\OBJs\stall.blend" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\skybox\back.png" />
+    <Image Include="Resource\skybox\bottom.png" />
+    <Image Include="Resource\skybox\front.png" />
+    <Image Include="Resource\skybox\left.png" />
+    <Image Include="Resource\skybox\right.png" />
+    <Image Include="Resource\skybox\top.png" />
     <Image Include="Resource\Textures\pop_cat.png" />
     <Image Include="Resource\Textures\stallTexture.png" />
     <Image Include="Resource\Textures\texture.png" />
