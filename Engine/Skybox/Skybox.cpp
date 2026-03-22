@@ -34,12 +34,12 @@ void Skybox::init() {
     glBindVertexArray(0);
 
     std::vector<std::string> faces = {
-        "Resource/skybox/posx.jpg",  // right
-        "Resource/skybox/negx.jpg",  // left
-        "Resource/skybox/posy.jpg",  // top
-        "Resource/skybox/negy.jpg",  // bottom
-        "Resource/skybox/posz.jpg",  // front
-        "Resource/skybox/negz.jpg"   // back
+        "Resource/skybox/opengl/right.jpg",  // right
+        "Resource/skybox/opengl/left.jpg",  // left
+        "Resource/skybox/opengl/top.jpg",  // top
+        "Resource/skybox/opengl/bottom.jpg",  // bottom
+        "Resource/skybox/opengl/front.jpg",  // front
+        "Resource/skybox/opengl/back.jpg"   // back
     };
     shader.StartShader();
     cubemapTexture = loadCubemap(faces);

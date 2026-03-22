@@ -189,25 +189,25 @@ bool Editor::run(GLFWwindow* window, std::vector<Entity>& entities) {
                     ImGui::EndMenu();
                 }
 
-                float buttonWidth = 70.0f;
-                float windowWidth = ImGui::GetWindowWidth();
-                ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f);
+                //float buttonWidth = 70.0f;
+                //float windowWidth = ImGui::GetWindowWidth();
+                //ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f);
 
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
-                if (isStarted) {
-                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.1f, 0.1f, 1.0f));
-                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
-                }
-                else {
-                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.4f, 0.1f, 1.0f));
-                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.6f, 0.2f, 1.0f));
-                }
-                if (ImGui::Button(isStarted ? " Stop " : " Start ")) {
-                    isStarted = !isStarted;
-                    if (isStarted)
-                        glfwSetWindowShouldClose(window, true);
-                }
-                ImGui::PopStyleColor(3);
+                //ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+                //if (isStarted) {
+                //    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.1f, 0.1f, 1.0f));
+                //    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+                //}
+                //else {
+                //    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.4f, 0.1f, 1.0f));
+                //    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.6f, 0.2f, 1.0f));
+                //}
+                //if (ImGui::Button(isStarted ? " Stop " : " Start ")) {
+                //    isStarted = !isStarted;
+                //    if (isStarted)
+                //        glfwSetWindowShouldClose(window, true);
+                //}
+                //ImGui::PopStyleColor(3);
 
                 ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 120);
                 ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
