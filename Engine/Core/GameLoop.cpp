@@ -49,6 +49,7 @@ void GameLoop::run(GLFWwindow* window, std::vector<Entity>& entities) {
             );
             shader.loadTransformationMatrix(matrix);
             renderer.render(entity.getModel());
+
         }
 
         shader.StopShader();

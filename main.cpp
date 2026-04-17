@@ -9,7 +9,7 @@
 #include "Engine/OBJLoader/OBJLoader.h"
 #include <vector>
 
-#define EDITOR_MODE
+//#define EDITOR_MODE
 
 #ifdef EDITOR_MODE
 #include "Engine/Core/Editor/Editor.h"
